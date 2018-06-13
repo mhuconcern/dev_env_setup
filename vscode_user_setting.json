@@ -1,0 +1,34 @@
+{
+    "python.pythonPath": "/anaconda3/bin/python",
+    "workbench.iconTheme": "material-icon-theme",
+    "materialTheme.autoApplyIcons": false,
+    "workbench.colorCustomizations": {},
+    "materialTheme.accentPrevious": "",
+    "editor.fontFamily": "'Consolas'",
+    "editor.fontSize": 16,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/.idea": true,
+        "**/.vscode": true
+    },
+    "jupyter.appendResults": true,
+    "window.zoomLevel": -1,
+    "bracketPairColorizer.showBracketsInGutter": true,
+    "bracketPairColorizer.showHorizontalScopeLine": false,
+    "editor.wordWrap": "off",
+    "editor.wordWrapColumn": 110,
+    "materialTheme.fixIconsRunning": false,
+    "python.linting.flake8Enabled": false,
+    "python.linting.pep8Enabled": false,
+    "python.linting.pylintArgs": [
+        "--ignore = E1101"
+    ],
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.fontFamily": "'Consolas'",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "material-icon-theme.folders.theme": "classic"
+}
