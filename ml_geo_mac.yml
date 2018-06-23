@@ -238,3 +238,4 @@ dependencies:
 - pytorch=0.2.0=py35_4cu75
 - torchvision=0.1.9=py35_1
 - gdal
+- simplejson
