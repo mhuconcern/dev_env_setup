@@ -1,9 +1,7 @@
 {
-    "python.pythonPath": "/anaconda3/bin/python",
-    "workbench.iconTheme": "material-icon-theme",
-    "materialTheme.autoApplyIcons": false,
+    
+    "python.pythonPath": "/User/at/anaconda3/bin/python",
     "workbench.colorCustomizations": {},
-    "materialTheme.accentPrevious": "",
     "editor.fontFamily": "'Consolas'",
     "editor.fontSize": 16,
     "files.exclude": {
@@ -16,12 +14,10 @@
         "**/.vscode": true
     },
     "jupyter.appendResults": true,
-    "window.zoomLevel": -1,
     "bracketPairColorizer.showBracketsInGutter": true,
     "bracketPairColorizer.showHorizontalScopeLine": false,
-    "editor.wordWrap": "off",
+    "editor.wordWrap": "on",
     "editor.wordWrapColumn": 110,
-    "materialTheme.fixIconsRunning": false,
     "python.linting.flake8Enabled": false,
     "python.linting.pep8Enabled": false,
     "python.linting.pylintArgs": [
@@ -29,6 +25,11 @@
     ],
     "terminal.integrated.fontSize": 15,
     "terminal.integrated.fontFamily": "'Consolas'",
-    "workbench.colorTheme": "Visual Studio Dark",
-    "material-icon-theme.folders.theme": "classic"
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.matchBrackets": false,
+    "window.zoomLevel": -1,
+    "workbench.iconTheme": "material-icon-theme",
+    "material-icon-theme.folders.theme": "classic",
+    "material-icon-theme.folders.color": "#ff7043",
+    "workbench.colorTheme": "One Dark Pro"
 }
