@@ -11,10 +11,6 @@ dependencies:
 - ffmpeg=3.2.4=1
 - imageio=2.2.0=py35_0
 - x264=20131217=3
-- anaconda-client=1.6.5=py35hf878a34_0
-- anaconda=custom=py35_0
-- anaconda-navigator=1.6.8=py35h9418ac0_1
-- anaconda-project=0.8.0=py35h19d87e7_0
 - appnope=0.1.0=py35hd172556_0
 - appscript=1.0.1=py35hdfff33c_1
 - asn1crypto=0.22.0=py35ha010153_1
@@ -43,7 +39,6 @@ dependencies:
 - cryptography=2.0.3=py35hde935b2_1
 - curl=7.55.1=h7601780_3
 - cycler=0.10.0=py35hb89929e_0
-- cython=0.26.1=py35h55fee34_0
 - cytoolz=0.8.2=py35h232c442_0
 - dask=0.15.2=py35h4901172_0
 - dask-core=0.15.2=py35hb25e3a2_0
@@ -237,5 +232,6 @@ dependencies:
 - tbb=4.3_20141023=0
 - pytorch=0.2.0=py35_4cu75
 - torchvision=0.1.9=py35_1
+- cython
 - gdal
 - simplejson
