@@ -1,0 +1,54 @@
+FROM jupyter/scipy-notebook:latest
+
+USER root
+
+RUN apt-get update && apt-get install -y curl make vim gcc
+
+# install libspatialindex required for rtree
+RUN curl -L http://download.osgeo.org/libspatialindex/spatialindex-src-1.8.5.tar.gz | tar xz &&\
+    cd spatialindex-src-1.8.5 &&\
+    ./configure &&\
+    make &&\
+    make install  &&\
+    ldconfig && \
+    rm -r ${HOME}/spatialindex-src-1.8.5
+
+RUN conda config --add channels menpo &&\
+    conda config --add channels conda-forge &&\
+    conda config --add channels soumith &&\
+    conda config --add channels anaconda-fusion
+
+# Add any additional packages you want available for use
+# in a Python 3 notebook to the first line here (e.g., pandas, matplotlib, etc.)
+RUN conda install --yes --quiet \
+    Shapely[vectorized] \
+    scipy \
+    numpy \
+    pandas \
+    rtree \
+    scikit-learn \
+    basemap \
+    basemap-data-hires \
+    dask \
+    bokeh \
+    seaborn \
+    netCDF4 \
+    fiona \
+    geopandas \
+    geoplot \
+    rasterio \
+    ffmpeg \
+    opencv \
+    Ipython \
+    osmnx
+
+
+# Install stuff not available from conda
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
+
+#Install folium from source to enable latest changes allowing timestamped geojson viz
+RUN git clone https://github.com/python-visualization/folium.git &&\
+    pip install -e ./folium
+
+USER $NB_USER
