@@ -1,0 +1,29 @@
+name: DS
+channels:
+  - menpo
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - sympy
+  - cython
+  - matplotlib
+  - pandas
+  - pandoc
+  - pandocfilters
+  - pillow
+  - ipython
+  - ipython_genutils
+  - numpy
+  - pip
+  - scikit-image
+  - scikit-learn
+  - scipy
+  - ffmpeg
+  - opencv
+  
+  - pip:
+    - filterpy
+    - slycot
+    - control 
+
