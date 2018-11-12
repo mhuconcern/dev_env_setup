@@ -4,6 +4,7 @@ channels:
   - anaconda
   - conda-forge
   - defaults
+  
 dependencies:
   - sympy
   - cython
@@ -21,9 +22,9 @@ dependencies:
   - scipy
   - ffmpeg
   - opencv
-  
+  - slycot
+
   - pip:
     - filterpy
-    - slycot
     - control 
 
