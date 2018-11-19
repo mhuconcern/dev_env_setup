@@ -7,7 +7,7 @@ channels:
   - defaults
   
 dependencies:
-  - python=3.7.1
+  - python=3.6.6
   - sympy
   - cython
   - matplotlib
