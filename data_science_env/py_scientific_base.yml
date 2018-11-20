@@ -1,4 +1,4 @@
-name: DS
+name: da_env
 
 channels:
   - menpo
@@ -7,7 +7,7 @@ channels:
   - defaults
   
 dependencies:
-  - python=3.6.6
+  - python=3.6.7
   - sympy
   - cython
   - matplotlib
