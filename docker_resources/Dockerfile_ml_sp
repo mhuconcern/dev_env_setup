@@ -42,7 +42,6 @@ RUN conda install --yes --quiet \
     Ipython \
     osmnx
 
-
 # Install stuff not available from conda
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
