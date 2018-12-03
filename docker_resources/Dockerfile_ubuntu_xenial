@@ -1,0 +1,107 @@
+FROM ubuntu:16.04
+
+LABEL maintainer="Ali Tohidi ali@oneconcern.com"
+
+USER root
+
+# installing OS essentials
+RUN apt-get update && apt-get install -yq curl make vim nano \
+    && apt-get install -yq --no-install-recommends \
+    gcc \
+    wget \
+    bzip2 \
+    ca-certificates \
+    sudo \
+    locales \
+    fonts-liberation \
+    build-essential \
+    cmake \
+    flex \
+    bison \
+    zlib1g-dev \ 
+    qt4-dev-tools \ 
+    libqt4-dev \
+    libqtwebkit-dev \ 
+    gnuplot \
+    libreadline-dev \ 
+    libncurses5-dev \
+    libxt-dev \
+    libopenmpi-dev \
+    openmpi-bin \
+    libboost-system-dev \
+    libboost-thread-dev \
+    libgmp-dev \
+    libmpfr-dev \
+    python \
+    python-dev \ 
+    libcgal-dev 
+
+RUN apt-get -yq dist-upgrade \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# making sure paraview and CGAL work
+RUN apt-get update && apt-get install -yq libglu1-mesa-dev libqt4-opengl-dev
+
+# use unicode
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+
+# Configure environment
+ENV LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    HOME=/home 
+
+# get the number of computing cpus available to the image
+RUN export CPUS=$(cat /proc/cpuinfo | grep processor | wc -l | xargs)
+
+# installing OpenFOAM 2.3
+WORKDIR ${HOME}
+RUN mkdir -p OpenFOAM
+WORKDIR  ${HOME}/OpenFOAM
+RUN wget "http://downloads.sourceforge.net/foam/OpenFOAM-2.3.0.tgz?use_mirror=mesh" -O OpenFOAM-2.3.0.tgz \
+    && wget "http://downloads.sourceforge.net/foam/ThirdParty-2.3.0.tgz?use_mirror=mesh" -O ThirdParty-2.3.0.tgz 
+ 
+RUN tar -xzf OpenFOAM-2.3.0.tgz && tar -xzf ThirdParty-2.3.0.tgz
+
+# making sure global MPI installation is used by OpenFOAM and finally change the defualt Boost and CGAL versions
+RUN ln -s /usr/bin/mpicc.openmpi ./OpenFOAM-2.3.0/bin/mpicc \
+    && ln -s /usr/bin/mpirun.openmpi ./OpenFOAM-2.3.0/bin/mpirun \
+    && sed -i -e 's/\(cgal_version=\)CGAL-4.3/\1cgal-system/' OpenFOAM-2.3.0/etc/config/CGAL.sh
+
+RUN chmod +x $HOME/OpenFOAM/OpenFOAM-2.3.0/etc/bashrc
+RUN /bin/bash -c 'source \$HOME/OpenFOAM/OpenFOAM-2.3.0/etc/bashrc WM_NCOMPPROCS=\$CPUS WM_MPLIB=SYSTEMOPENMPI'
+RUN echo "alias of230='source \$HOME/OpenFOAM/OpenFOAM-2.3.0/etc/bashrc $FOAM_SETTINGS'" >> ${HOME}/.bashrc
+
+# I. BUILDING THIRDPARTY APPS
+# RUN chmod -R 777 ${HOME}/OpenFOAM/ThirdParty-2.3.0/
+# WORKDIR ${HOME}/OpenFOAM/ThirdParty-2.3.0/
+RUN /bin/bash -c "env"
+RUN chmod -R 777 $WM_THIRD_PARTY_DIR
+WORKDIR $WM_THIRD_PARTY_DIR 
+
+#make very certain that the correct Qt version is being used, by running this command:
+RUN export QT_SELECT=qt4
+ 
+# Fix issue regarding not wanting to build CGAL
+RUN sed -i -e 's|\(^if.*CGAL_ARCH_PATH.*\)]|\1 -a "${CGAL_ARCH_PATH##*/}" != "cgal-system" ]|' Allwmake
+ 
+# This next command will take a while... somewhere between 5 minutes to 30 minutes.
+RUN ./Allwmake 2>&1 paraview_log.txt
+ 
+#update the shell environment
+RUN wmSET ${FOAM_SETTINGS}
+
+
+# install Tini
+RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.18.0/tini && \
+    echo "12d20136605531b09a2c2dac02ccee85e1b874eb322ef6baf7561cd93f93c855 *tini" | sha256sum -c - && \
+    mv tini /usr/local/bin/tini && \
+    chmod +x /usr/local/bin/tini
+
+
+
+WORKDIR ${HOME}
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["/bin/bash of230"]
