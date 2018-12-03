@@ -59,9 +59,18 @@ ENV LC_ALL=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     HOME=/home 
 
-ADD make_openfoam240.sh ${HOME}
-RUN chmod +x ${HOME}/make_openfoam240.sh && /bin/bash -c "./make_openfoam240"
 
 WORKDIR ${HOME}
+RUN mkdir -p OpenFOAM && cd ${HOME}/OpenFOAM \ 
+    && wget "http://downloads.sourceforge.net/foam/OpenFOAM-2.4.0.tgz?use_mirror=mesh" -O OpenFOAM-2.4.0.tgz \ 
+    && wget "http://downloads.sourceforge.net/foam/ThirdParty-2.4.0.tgz?use_mirror=mesh" -O ThirdParty-2.4.0.tgz \
+    && tar -xzf OpenFOAM-2.4.0.tgz && tar -xzf ThirdParty-2.4.0.tgz
+
+ADD ./make_openfoam240.sh ${HOME}/OpenFOAM
+WORKDIR ${HOME}/OpenFOAM/
+RUN chmod a+x make_openfoam240.sh \
+    && pwd && ls -ltr \
+    && ./make_openfoam240.sh
+
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["/bin/bash of240"]

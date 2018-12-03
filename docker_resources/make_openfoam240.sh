@@ -1,33 +1,23 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -exo pipefail
 
-cd ~
-mkdir OpenFOAM
-cd OpenFOAM
-wget "http://downloads.sourceforge.net/foam/OpenFOAM-2.4.0.tgz?use_mirror=mesh" -O OpenFOAM-2.4.0.tgz
-wget "http://downloads.sourceforge.net/foam/ThirdParty-2.4.0.tgz?use_mirror=mesh" -O ThirdParty-2.4.0.tgz
- 
-tar -xzf OpenFOAM-2.4.0.tgz 
-tar -xzf ThirdParty-2.4.0.tgz
-
+# making sure the right mpi is setup for OpenFOAM
 ln -s /usr/bin/mpicc.openmpi OpenFOAM-2.4.0/bin/mpicc
 ln -s /usr/bin/mpirun.openmpi OpenFOAM-2.4.0/bin/mpirun
-
 sed -i -e 's/^\(cgal_version=\).*/\1cgal-system/' OpenFOAM-2.4.0/etc/config/CGAL.sh
 
+# getting the number of available processors
 export NUM_CPUS=$(cat /proc/cpuinfo | grep processor | wc -l | xargs)
 source $HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc WM_NCOMPPROCS=$NUM_CPUS
 
-echo "alias of240='source \$HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc $FOAM_SETTINGS'" >> $HOME/.bashrc
+# adding to alias
+echo "alias of240='source \$HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc \$FOAM_SETTINGS'" >> $HOME/.bashrc
 
-wmSET $FOAM_SETTINGS
-
-# buid
-
+# building OpenFOAM 
 cd $WM_PROJECT_DIR
  
-#Change how the flex version is checked
+# change how the flex version is checked
 find src applications -name "*.L" -type f | xargs sed -i -e 's=\(YY\_FLEX\_SUBMINOR\_VERSION\)=YY_FLEX_MINOR_VERSION < 6 \&\& \1='
 
 mkdir -p $CGAL_ARCH_PATH
