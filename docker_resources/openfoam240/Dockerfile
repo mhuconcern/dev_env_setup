@@ -72,5 +72,8 @@ RUN chmod a+x make_openfoam240.sh \
     && pwd && ls -ltr \
     && ./make_openfoam240.sh
 
+WORKDIR ${HOME}
+EXPOSE 7777 8888 52698
+
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["/bin/bash of240"]
