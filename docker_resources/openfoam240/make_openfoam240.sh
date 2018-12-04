@@ -25,11 +25,11 @@ mkdir -p $BOOST_ARCH_PATH
 
 cd $WM_PROJECT_DIR
  
-#Still better be certain that the correct Qt version is being used
+# to be certain that the correct Qt version is being used
 export QT_SELECT=qt4
  
 # This next command will take a while... somewhere between 30 minutes to 3-6 hours.
 ./Allwmake > log.make 2>&1
  
-#Run it a second time for getting a summary of the installation
+# run it a second time for getting a summary of the installation
 ./Allwmake > log.make 2>&1

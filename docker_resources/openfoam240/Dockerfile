@@ -60,6 +60,7 @@ ENV LC_ALL=en_US.UTF-8 \
     HOME=/home 
 
 
+# installing OpenFOAM 2.4.0
 WORKDIR ${HOME}
 RUN mkdir -p OpenFOAM && cd ${HOME}/OpenFOAM \ 
     && wget "http://downloads.sourceforge.net/foam/OpenFOAM-2.4.0.tgz?use_mirror=mesh" -O OpenFOAM-2.4.0.tgz \ 
@@ -71,7 +72,11 @@ RUN chmod a+x make_openfoam240.sh \
     && pwd && ls -ltr \
     && ./make_openfoam240.sh
 
-# place holder for other solvers like LEMOS
+# installing LEMOS
+ADD ./make_lemos.sh ${HOME}
+WORKDIR ${HOME}
+RUN chmo a+x make_lemos.sh \
+    && ./make_lemos.sh
 
 WORKDIR ${HOME}
 EXPOSE 7777 8888 52698
