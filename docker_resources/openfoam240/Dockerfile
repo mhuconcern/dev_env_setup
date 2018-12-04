@@ -63,14 +63,15 @@ ENV LC_ALL=en_US.UTF-8 \
 WORKDIR ${HOME}
 RUN mkdir -p OpenFOAM && cd ${HOME}/OpenFOAM \ 
     && wget "http://downloads.sourceforge.net/foam/OpenFOAM-2.4.0.tgz?use_mirror=mesh" -O OpenFOAM-2.4.0.tgz \ 
-    && wget "http://downloads.sourceforge.net/foam/ThirdParty-2.4.0.tgz?use_mirror=mesh" -O ThirdParty-2.4.0.tgz \
-    && tar -xzf OpenFOAM-2.4.0.tgz && tar -xzf ThirdParty-2.4.0.tgz
+    && tar -xzf OpenFOAM-2.4.0.tgz 
 
 ADD ./make_openfoam240.sh ${HOME}/OpenFOAM
 WORKDIR ${HOME}/OpenFOAM/
 RUN chmod a+x make_openfoam240.sh \
     && pwd && ls -ltr \
     && ./make_openfoam240.sh
+
+# place holder for other solvers like LEMOS
 
 WORKDIR ${HOME}
 EXPOSE 7777 8888 52698
