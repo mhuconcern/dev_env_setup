@@ -1,0 +1,18 @@
+FROM atohidi/of240
+
+LABEL maintainer="Ali Tohidi ali@oneconcern.com"
+
+USER root
+
+# installing LEMOS
+ADD ./make_lemos.sh ${HOME}/
+COPY ./LEMOS-2.4.x-master.zip ${HOME}/
+WORKDIR ${HOME}
+RUN chmod a+x ./make_lemos.sh \
+    && ./make_lemos.sh
+
+WORKDIR ${HOME}
+EXPOSE 7777 8888 52698
+
+ENTRYPOINT ["tini", "-g", "--"]
+CMD ["/bin/bash"]

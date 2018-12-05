@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 LABEL maintainer="Ali Tohidi ali@oneconcern.com"
 
@@ -34,7 +34,11 @@ RUN apt-get update && apt-get install -yq curl make vim nano \
     libmpfr-dev \
     python \
     python-dev \ 
-    libcgal-dev 
+    libcgal-dev \
+    libgsl-dev \
+    build-essential \
+    unzip 
+
 
 RUN apt-get -yq dist-upgrade \
     && apt-get clean \
@@ -72,12 +76,12 @@ RUN chmod a+x make_openfoam240.sh \
     && pwd && ls -ltr \
     && ./make_openfoam240.sh
 
-# installing LEMOS
-ADD ./make_lemos.sh ${HOME}/
-COPY ./LEMOS-2.4.x-master.zip ${HOME}/
-WORKDIR ${HOME}
-RUN chmod a+x ./make_lemos.sh \
-    && ./make_lemos.sh
+# # installing LEMOS
+# ADD ./make_lemos.sh ${HOME}/
+# COPY ./LEMOS-2.4.x-master.zip ${HOME}/
+# WORKDIR ${HOME}
+# RUN chmod a+x ./make_lemos.sh \
+#     && ./make_lemos.sh
 
 WORKDIR ${HOME}
 EXPOSE 7777 8888 52698

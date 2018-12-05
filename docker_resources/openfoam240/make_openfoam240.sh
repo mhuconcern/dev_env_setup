@@ -11,7 +11,7 @@ sed -i -e 's/^\(cgal_version=\).*/\1cgal-system/' OpenFOAM-2.4.0/etc/config/CGAL
 export NUM_CPUS=$(cat /proc/cpuinfo | grep processor | wc -l | xargs)
 source $HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc WM_NCOMPPROCS=$NUM_CPUS
 
-# adding to alias
+# adding to .bashrc
 echo "source \$HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc \$FOAM_SETTINGS" >> $HOME/.bashrc
 
 # building OpenFOAM 
