@@ -73,9 +73,10 @@ RUN chmod a+x make_openfoam240.sh \
     && ./make_openfoam240.sh
 
 # installing LEMOS
-ADD ./make_lemos.sh ${HOME}
+ADD ./make_lemos.sh ${HOME}/
+COPY ./LEMOS-2.4.x-master.zip ${HOME}/
 WORKDIR ${HOME}
-RUN chmo a+x make_lemos.sh \
+RUN chmod a+x ./make_lemos.sh \
     && ./make_lemos.sh
 
 WORKDIR ${HOME}
