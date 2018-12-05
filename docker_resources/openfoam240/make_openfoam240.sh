@@ -12,7 +12,7 @@ export NUM_CPUS=$(cat /proc/cpuinfo | grep processor | wc -l | xargs)
 source $HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc WM_NCOMPPROCS=$NUM_CPUS
 
 # adding to alias
-echo "alias of240='source \$HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc \$FOAM_SETTINGS'" >> $HOME/.bashrc
+echo "source \$HOME/OpenFOAM/OpenFOAM-2.4.0/etc/bashrc \$FOAM_SETTINGS" >> $HOME/.bashrc
 
 # building OpenFOAM 
 cd $WM_PROJECT_DIR

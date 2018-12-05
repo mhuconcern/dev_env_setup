@@ -83,4 +83,4 @@ WORKDIR ${HOME}
 EXPOSE 7777 8888 52698
 
 ENTRYPOINT ["tini", "-g", "--"]
-CMD ["/bin/bash of240"]
+CMD ["/bin/bash"]
